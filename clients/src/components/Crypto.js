@@ -101,7 +101,7 @@ const CryptoConverterForm = () => {
           </select>
         </div>
         <div className="icon">
-          <FaExchangeAlt size={24} />
+          <FaExchangeAlt size={22} />
         </div>
         <div className="target">
           <p>To</p>

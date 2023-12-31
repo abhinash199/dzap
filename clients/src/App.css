@@ -81,6 +81,7 @@ label {
 input#amount {
   font-weight: 400;
   font-size: 16px;
+  padding: 8px 0px;
   width: 100%;
   border-bottom: 2px solid #02002c;
   color: #7a789d;
@@ -101,14 +102,14 @@ input#amount:focus {
 
 select {
   width: 100%;
-  padding: 0.6em;
+  padding: 8px;
   font-size: 14px;
   border-radius: 0.2em;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-repeat: no-repeat;
-  background-position: right 15px top 50%, center;
+  background-position: right 6px top 50%, center;
   background-size: 10px 10px;
   background-color: #9873fe;
   color: #ffffff;
@@ -142,7 +143,7 @@ button {
 }
 
 .source {
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .source p,
@@ -159,5 +160,5 @@ button {
 }
 
 .icon {
-  margin-top: 35px;
+  margin-top: 33px;
 }
