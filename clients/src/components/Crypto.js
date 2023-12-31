@@ -13,11 +13,13 @@ const CryptoConverterForm = () => {
   const [supported, setSupported] = useState();
   const [loading, setloading] = useState(true);
 
+  const url =process.env.REACT_APP_API_BASE_URL;
+  
   useEffect(() => {
     // Fetch the list of cryptocurrencies from the CoinGecko API
     const fetchCryptoList = async () => {
       try {
-        const response = await fetch("http://localhost:4000/top100");
+        const response = await fetch(`${url}/top100`);
         const data = await response.json();
         setloading(false);
         setCryptoList(data);
@@ -29,7 +31,7 @@ const CryptoConverterForm = () => {
     const fetchSupportedCurrencies = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/supported"
+          `${url}/supported`
         );
         const data = await response.json();
         setloading(false);
@@ -56,7 +58,7 @@ const CryptoConverterForm = () => {
       });
       console.log(data);
       axios
-        .post("http://localhost:4000/convert", data, {
+        .post(`${url}/convert`, data, {
           headers: { "Content-Type": "application/json" },
         })
         // .then((res)=>console.log(res,"myyyyyyyy"))
