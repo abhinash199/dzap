@@ -48,7 +48,7 @@ const CryptoConverterForm = () => {
     // Basic validation
     console.log(sourceCrypto,amount,targetCurrency)
     if (!sourceCrypto || !amount || isNaN(amount)) {
-      setError("Please fill in valid values.");
+      setError("Please fill the required value.");
       return;
     } else {
       const data = JSON.stringify({
