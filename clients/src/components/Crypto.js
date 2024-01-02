@@ -82,7 +82,7 @@ const CryptoConverterForm = () => {
       <label htmlFor="amount">Amount:</label>
       <input
       type="text"
-        maxLength={8}
+        maxLength={15}
         onKeyPress={(event) => {
           if (!/[0-9]/.test(event.key)) {
             event.preventDefault();
