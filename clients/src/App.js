@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+//import components
 import Crypto from './components/Crypto';
 
 function App() {

@@ -28,7 +28,7 @@ app.get("/top100", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+// Endpoint to fetch the supported cryptocurrencies
 app.get("/supported", async (req, res) => {
   try {
     const response = await fetch(
@@ -64,6 +64,7 @@ app.post("/convert", async (req, res) => {
   }
 });
 
+//listening the server on 4000 Port
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

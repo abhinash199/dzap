@@ -1,9 +1,10 @@
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+//import react-icons
 import { FaExchangeAlt } from "react-icons/fa";
+
 const CryptoConverterForm = () => {
+  //usestate hooks
   const [cryptoList, setCryptoList] = useState([]);
   const [sourceCrypto, setSourceCrypto] = useState("bitcoin");
   const [amount, setAmount] = useState("");
@@ -13,10 +14,12 @@ const CryptoConverterForm = () => {
   const [supported, setSupported] = useState();
   const [loading, setloading] = useState(true);
 
-  const url =process.env.REACT_APP_API_BASE_URL;
-  
+  //Base url
+  const url = process.env.REACT_APP_API_BASE_URL;
+
+  //useEffect hooks
   useEffect(() => {
-    // Fetch the list of cryptocurrencies from the CoinGecko API
+    // Fetch the list of top 100 cryptocurrencies from the CoinGecko API
     const fetchCryptoList = async () => {
       try {
         const response = await fetch(`${url}/top100`);
@@ -28,11 +31,10 @@ const CryptoConverterForm = () => {
       }
     };
 
+    // Fetch the list of supported cryptocurrencies from the CoinGecko API
     const fetchSupportedCurrencies = async () => {
       try {
-        const response = await fetch(
-          `${url}/supported`
-        );
+        const response = await fetch(`${url}/supported`);
         const data = await response.json();
         setloading(false);
         setSupported(data);
@@ -41,12 +43,14 @@ const CryptoConverterForm = () => {
       }
     };
 
+    //calling the function
     fetchCryptoList();
     fetchSupportedCurrencies();
   }, []);
+
   const handleConvert = () => {
     // Basic validation
-    console.log(sourceCrypto,amount,targetCurrency)
+    console.log(sourceCrypto, amount, targetCurrency);
     if (!sourceCrypto || !amount || isNaN(amount)) {
       setError("Please fill the required value.");
       return;
@@ -56,29 +60,39 @@ const CryptoConverterForm = () => {
         amount: amount,
         targetCurrency: targetCurrency.toLowerCase(),
       });
-      console.log(data);
+
+      //post the data to the coingecko PI
       axios
         .post(`${url}/convert`, data, {
           headers: { "Content-Type": "application/json" },
         })
-        // .then((res)=>console.log(res,"myyyyyyyy"))
-        .then((response) => setConvertedAmount(response.data)).catch((err)=>console.log(err))
+        .then((response) => setConvertedAmount(response.data))
+        .catch((err) => console.log(err));
       setError(null);
     }
   };
 
   return (
     <div className="wrapper">
+      {/* Top header section */}
       <div className="app-details">
         <img src="app-icon.svg" className="app-icon" />
         <h1 className="app-title">Currency Converter</h1>
       </div>
       <label htmlFor="amount">Amount:</label>
       <input
-        type="number"
+      type="text"
+        maxLength={8}
+        onKeyPress={(event) => {
+          if (!/[0-9]/.test(event.key)) {
+            event.preventDefault();
+          }
+        }}
+       pattern="[0-9]*"
         id="amount"
         onChange={(e) => setAmount(e.target.value)}
         value={amount}
+        data-testid="amount-input"
         required
       />
       <div className="dropdowns">
@@ -86,6 +100,7 @@ const CryptoConverterForm = () => {
           <p>From</p>
           <select
             id="from-currency-select"
+            data-testid="from-select"
             onChange={(e) => setSourceCrypto(e.target.value)}
             value={sourceCrypto}
             required
@@ -107,6 +122,7 @@ const CryptoConverterForm = () => {
           <p>To</p>
           <select
             id="to-currency-select"
+            data-testid="to-select"
             onChange={(e) => setTargetCurrency(e.target.value)}
             value={targetCurrency}
             required
@@ -123,10 +139,18 @@ const CryptoConverterForm = () => {
           </select>
         </div>
       </div>
-      <button id="convert-button" type="btton" onClick={handleConvert}>
+      <button
+        id="convert-button"
+        data-testid="result"
+        type="button"
+        onClick={handleConvert}
+      >
         Convert
       </button>
+      {/* displaying error message */}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {/* displaying the convertedAmount */}
       {convertedAmount !== null && (
         <p id="result">
           {convertedAmount.amount} {convertedAmount.sourceCrypto.toUpperCase()}{" "}
